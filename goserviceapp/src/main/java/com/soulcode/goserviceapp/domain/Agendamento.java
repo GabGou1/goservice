@@ -11,48 +11,43 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "agendamento")
+@Table(name = "agendamentos")
 public class Agendamento {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotNull(message = "O campo do agendamento referente ao cliente não pode ser vazio.")
     @ManyToOne
     @JoinColumn(nullable = false)
     private Cliente cliente;
-
     @NotNull(message = "O campo do agendamento referente ao prestador não pode ser vazio.")
     @ManyToOne
     @JoinColumn(nullable = false)
     private Prestador prestador;
-
     @NotNull(message = "O campo do agendamento referente ao serviço não pode ser vazio.")
     @ManyToOne
     @JoinColumn(nullable = false)
     private Servico servico;
-
     @NotNull(message = "O status do agendamento não pode ser vazio.")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StatusAgendamento statusAgendamento;
-
-    @NotNull(message = "A data do agendamento não poder ser nula")
+    @NotNull(message = "A data do agendamento não pode ser vazia.")
     @Column(nullable = false)
-    private LocalDate data;
-
-    @NotNull(message = "A hora do agendamento não pode estar vazio.")
+    private  LocalDate data;
+    @NotNull(message = "A hora do agendamento não pode ser vazia.")
     @Column(nullable = false)
     private LocalTime hora;
-
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime dataHoraRegistro;
 
-    public Agendamento() {
+    public Agendamento(){
         this.statusAgendamento = StatusAgendamento.AGUARDANDO_CONFIRMACAO;
     }
-    public Agendamento(Long id, Cliente cliente, Prestador prestador, Servico servico, StatusAgendamento statusAgendamento, LocalDate data, LocalTime hora) {
+
+    public Agendamento(Long id, Cliente cliente, Prestador prestador, Servico servico, StatusAgendamento statusAgendamento, LocalDate data, LocalTime hora, LocalDateTime dataHoraRegistro) {
         this.id = id;
         this.cliente = cliente;
         this.prestador = prestador;
@@ -117,7 +112,8 @@ public class Agendamento {
     public void setDataHoraRegistro(LocalDateTime dataHoraRegistro) {
         this.dataHoraRegistro = dataHoraRegistro;
     }
-    public boolean isCancelably(){
+
+    public boolean isCancelable(){
         return statusAgendamento.equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO);
     }
     public boolean isConfirmable(){
@@ -127,10 +123,6 @@ public class Agendamento {
         return statusAgendamento.equals(StatusAgendamento.CONFIRMADO);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, cliente, prestador, servico, statusAgendamento, data, hora, dataHoraRegistro);
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -144,5 +136,9 @@ public class Agendamento {
                 Objects.equals(data, agendamento.data) &&
                 Objects.equals(hora, agendamento.hora) &&
                 Objects.equals(dataHoraRegistro, agendamento.dataHoraRegistro);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, cliente, prestador, servico, statusAgendamento, data, hora, dataHoraRegistro);
     }
 }
