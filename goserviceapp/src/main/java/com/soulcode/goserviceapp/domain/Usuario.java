@@ -1,9 +1,7 @@
 package com.soulcode.goserviceapp.domain;
 
-// Mostra que este modelo está ligado a um banco de dados
 import com.soulcode.goserviceapp.domain.enums.Perfil;
 import jakarta.persistence.*;
-// Criar tabela com nome e usuários
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,14 +9,13 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name="usuarios")
+@Table(name= "usuarios")
 public class Usuario implements UserDetails {
-    //AutoIncrement
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //Coluna da entidade não pode ser nulo, e no máximo com 100 caracteres
     @Column(nullable = false, length = 100)
     private String nome;
 
@@ -36,21 +33,22 @@ public class Usuario implements UserDetails {
     private Perfil perfil;
 
     public Usuario(){
-        this.habilitado = true;
+        this.habilitado =true;
     }
 
-    public Usuario(Long id, String nome, String email, String senha, Boolean habilitado, Perfil perfil) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.habilitado = habilitado;
-        this.perfil = perfil;
+    public Usuario(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado){
+        this.id=id;
+        this.nome=nome;
+        this.email=email;
+        this.senha=senha;
+        this.perfil=perfil;
+        this.habilitado=habilitado;
     }
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -58,6 +56,7 @@ public class Usuario implements UserDetails {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -65,6 +64,7 @@ public class Usuario implements UserDetails {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -72,6 +72,7 @@ public class Usuario implements UserDetails {
     public String getSenha() {
         return senha;
     }
+
     public void setSenha(String senha) {
         this.senha = senha;
     }
@@ -79,6 +80,7 @@ public class Usuario implements UserDetails {
     public Boolean getHabilitado() {
         return habilitado;
     }
+
     public void setHabilitado(Boolean habilitado) {
         this.habilitado = habilitado;
     }
@@ -86,6 +88,7 @@ public class Usuario implements UserDetails {
     public Perfil getPerfil() {
         return perfil;
     }
+
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
     }
@@ -124,6 +127,10 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, email, senha, perfil);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -135,9 +142,5 @@ public class Usuario implements UserDetails {
                 Objects.equals(email, usuario.email) &&
                 Objects.equals(senha, usuario.senha) &&
                 perfil == usuario.perfil;
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nome, email, senha, perfil);
     }
 }

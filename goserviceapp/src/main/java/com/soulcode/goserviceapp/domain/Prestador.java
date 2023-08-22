@@ -15,34 +15,36 @@ import java.util.Objects;
 public class Prestador extends Usuario{
     private String descricao;
 
-    @Min(value = 10, message = "O valor mínimo de taxa cobrada por hora é 10.")
+    @Min(value = 10, message = "O valor minimo de taxa cobrada por hora é 10.")
     private Float taxaPorHora;
 
     @ManyToMany
     @JoinTable(
-        name = "prestadores_servicos",
-        joinColumns = @JoinColumn(name = "prestador_id"),
-        inverseJoinColumns = @JoinColumn(name = "servico_id")
+            name = "prestadores_servicos",
+            joinColumns = @JoinColumn(name = "prestador_id"),
+            inverseJoinColumns = @JoinColumn(name = "servico_id")
     )
     private List<Servico> especialidades;
 
-    public Prestador() {
+    public Prestador(){
         super();
         setPerfil(Perfil.PRESTADOR);
     }
-    public Prestador(Long id, String nome, String email, String senha, Boolean habilitado, Perfil perfil, String descricao, Float taxaPorHora, List<Servico> especialidades) {
-        super(id, nome, email, senha, habilitado, perfil);
+
+    public Prestador(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado) {
+        super(id, nome, email, senha, perfil, habilitado);
+    }
+    public Prestador(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, String descricao, Float taxaPorHora, List<Servico> especialidades) {
+        super(id, nome, email, senha, perfil, habilitado);
         this.descricao = descricao;
         this.taxaPorHora = taxaPorHora;
         this.especialidades = especialidades;
-    }
-    public Prestador(Long id, String nome, String email, String senha, Boolean habilitado, Perfil perfil) {
-        super(id, nome, email, senha, habilitado, perfil);
     }
 
     public String getDescricao() {
         return descricao;
     }
+
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
@@ -50,6 +52,7 @@ public class Prestador extends Usuario{
     public Float getTaxaPorHora() {
         return taxaPorHora;
     }
+
     public void setTaxaPorHora(Float taxaPorHora) {
         this.taxaPorHora = taxaPorHora;
     }
@@ -57,17 +60,20 @@ public class Prestador extends Usuario{
     public List<Servico> getEspecialidades() {
         return especialidades;
     }
+
     public void setEspecialidades(List<Servico> especialidades) {
         this.especialidades = especialidades;
     }
+
     public void addEspecialidade(Servico servico){
-        if (especialidades == null){
+        if(especialidades == null){
             especialidades = new ArrayList<>();
         }
         especialidades.add(servico);
     }
-    public Boolean removeEspecialidade(Servico servico){
-        if (especialidades != null){
+
+    public boolean removeEspecialidade(Servico servico){
+        if(especialidades != null){
             return especialidades.remove(servico);
         }
         return false;
@@ -78,7 +84,7 @@ public class Prestador extends Usuario{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Prestador prestador = (Prestador) o;
-        return Objects.equals(descricao, prestador.descricao) &&
+        return Objects.equals(descricao, prestador.descricao)&&
                 Objects.equals(taxaPorHora, prestador.taxaPorHora) &&
                 Objects.equals(especialidades, prestador.especialidades);
     }
@@ -86,4 +92,5 @@ public class Prestador extends Usuario{
     public int hashCode() {
         return Objects.hash(descricao, taxaPorHora, especialidades);
     }
+
 }
