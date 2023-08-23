@@ -5,3 +5,5 @@ select * from agendamentos;
 select * from prestadores_servicos;
 select * from servico;
 select * from usuarios;
+
+DELETE usuarios FROM usuarios WHERE id = 1;
