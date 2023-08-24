@@ -19,7 +19,7 @@ public class AuthService {
     @Autowired
     private PasswordEncoder encoder;
 
-    public Cliente createClientre(Cliente cliente){
+    public Cliente createCliente(Cliente cliente){
         String passwordEncoded = encoder.encode(cliente.getSenha());
         cliente.setSenha(passwordEncoded);
         cliente.setId(null);
