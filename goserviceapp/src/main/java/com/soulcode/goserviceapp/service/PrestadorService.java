@@ -36,7 +36,7 @@ public class PrestadorService {
         return prestadorRepository.save(updatedPrestador);
     }
 
-    public Prestador findAuthentication(Authentication authentication){
+    public Prestador findAuthenticated(Authentication authentication){
         if (authentication != null && authentication.isAuthenticated()){
             Optional<Prestador> prestador = prestadorRepository.findByEmail(authentication.getName());
             if (prestador.isPresent()){
@@ -50,14 +50,14 @@ public class PrestadorService {
     }
 
     public void addServicePrestador(Authentication authentication, Long id){
-        Prestador prestador = findAuthentication(authentication);
+        Prestador prestador = findAuthenticated(authentication);
         Servico servico = servicoService.findById(id);
         prestador.addEspecialidade(servico);
         prestadorRepository.save(prestador);
     }
 
     public void removeServicePrestador(Authentication authentication, Long id){
-        Prestador prestador = findAuthentication(authentication);
+        Prestador prestador = findAuthenticated(authentication);
         Servico servico = servicoService.findById(id);
         prestador.addEspecialidade(servico);
         prestadorRepository.delete(prestador);
