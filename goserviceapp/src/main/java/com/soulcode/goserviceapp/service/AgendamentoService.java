@@ -74,7 +74,7 @@ public class AgendamentoService {
         throw new StatusAgendamentoImutavelException();
     }
 
-    public void confirmAgenda(Authentication authentication, Long id){
+    public void confirmAgendaPrestador(Authentication authentication, Long id){
         Prestador prestador = prestadorService.findAuthenticated(authentication);
         Agendamento agendamento = findById(id);
         if(agendamento.getStatusAgendamento().equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO)){

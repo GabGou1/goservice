@@ -5,7 +5,7 @@ public enum StatusAgendamento {
     CONFIRMADO("Confirmado"),
     CONCLUIDO("Concluído"),
     CANCELADO_PELO_CLIENTE("Cancelado pelo Cliente"),
-    CANCELADO_PELO_PRESTADOR("Cancelador pelo Prestador");
+    CANCELADO_PELO_PRESTADOR("Cancelado pelo Prestador");
 
     private final String descricao;
 
