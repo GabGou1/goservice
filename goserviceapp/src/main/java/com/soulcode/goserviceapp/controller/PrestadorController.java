@@ -76,7 +76,7 @@ public class PrestadorController {
     @PostMapping(value = "/dados/especialidade/adicionar")
     public String adicionarEspecialidade(@RequestParam(name = "servicoId")Long id, Authentication authentication, RedirectAttributes attributes){
         try {
-            prestadorService.addServicePrestador(authentication, id);
+            prestadorService.addServicoPrestador(authentication, id);
             attributes.addFlashAttribute("successMessage", "Especialidade adicionada.");
         } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException | ServicoNaoEncontradoException ex){
             attributes.addFlashAttribute("errorMessage", ex.getMessage());
@@ -125,7 +125,7 @@ public class PrestadorController {
             RedirectAttributes attributes
     ) {
         try {
-            agendamentoService.confirmAgendaPrestador(authentication, agendamentoId);
+            agendamentoService.confirmAgenda(authentication, agendamentoId);
             attributes.addFlashAttribute("successMessage", "Agendamento confirmado.");
         } catch (AgendamentoNaoEncontradoException | UsuarioNaoEncontradoException |
                  UsuarioNaoAutenticadoException | StatusAgendamentoImutavelException ex) {

@@ -7,7 +7,8 @@ select * from prestadores_servicos;
 select * from servicos;
 select * from usuarios;
 
-DELETE usuarios FROM usuarios WHERE id = 3;
+
+DELETE FROM usuarios WHERE id = 4;
 insert into usuarios (dtype, nome, email, perfil, senha, habilitado)
 value ("Administrador", "Gabriel Riberi Koa", "gabrielriberikoa@gmail.com", "ADMIN", "$2a$10$r3r9V682sIhE/61jZjqkauT.08pxrBx.GE1T.yEogN5r8Ly2S8eTK", 1); # 123456
 
@@ -23,3 +24,13 @@ VALUES
     ('Saúde', 'Sessão de fisioterapia para reabilitação', 'Fisioterapia de Reabilitação'),
     ('Desenvolvimento', 'Desenvolvimento de site institucional', 'Desenvolvimento de Site Institucional'),
     ('Design', 'Design de interface de usuário para aplicativos', 'Design de Interface de Aplicativo');
+
+INSERT INTO prestadores_servicos (prestador_id, servico_id) VALUES
+    (2, 24),
+    (2, 27),
+    (2, 30);
+
+SELECT u.* FROM usuarios u 
+	JOIN prestadores_servicos ps ON u.id = ps.prestador_id
+	JOIN servicos s ON s.id = ps.servico_id
+    WHERE s.id = 30;

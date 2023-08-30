@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,7 +13,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "agendamentos")
-public class Agendamento {
+public class Agendamento implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,6 +61,7 @@ public class Agendamento {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -67,6 +69,7 @@ public class Agendamento {
     public Cliente getCliente() {
         return cliente;
     }
+
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
@@ -74,6 +77,7 @@ public class Agendamento {
     public Prestador getPrestador() {
         return prestador;
     }
+
     public void setPrestador(Prestador prestador) {
         this.prestador = prestador;
     }
@@ -81,6 +85,7 @@ public class Agendamento {
     public Servico getServico() {
         return servico;
     }
+
     public void setServico(Servico servico) {
         this.servico = servico;
     }
@@ -88,6 +93,7 @@ public class Agendamento {
     public StatusAgendamento getStatusAgendamento() {
         return statusAgendamento;
     }
+
     public void setStatusAgendamento(StatusAgendamento statusAgendamento) {
         this.statusAgendamento = statusAgendamento;
     }
@@ -95,6 +101,7 @@ public class Agendamento {
     public LocalDate getData() {
         return data;
     }
+
     public void setData(LocalDate data) {
         this.data = data;
     }
@@ -102,6 +109,7 @@ public class Agendamento {
     public LocalTime getHora() {
         return hora;
     }
+
     public void setHora(LocalTime hora) {
         this.hora = hora;
     }
@@ -109,6 +117,7 @@ public class Agendamento {
     public LocalDateTime getDataHoraRegistro() {
         return dataHoraRegistro;
     }
+
     public void setDataHoraRegistro(LocalDateTime dataHoraRegistro) {
         this.dataHoraRegistro = dataHoraRegistro;
     }
@@ -116,9 +125,11 @@ public class Agendamento {
     public boolean isCancelable(){
         return statusAgendamento.equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO);
     }
+
     public boolean isConfirmable(){
         return statusAgendamento.equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO);
     }
+
     public boolean isRealizable(){
         return statusAgendamento.equals(StatusAgendamento.CONFIRMADO);
     }
@@ -137,6 +148,7 @@ public class Agendamento {
                 Objects.equals(hora, agendamento.hora) &&
                 Objects.equals(dataHoraRegistro, agendamento.dataHoraRegistro);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(id, cliente, prestador, servico, statusAgendamento, data, hora, dataHoraRegistro);
